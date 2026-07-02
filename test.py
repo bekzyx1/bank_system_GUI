@@ -1,4 +1,6 @@
 import customtkinter as ctk
+from PIL import Image
+from tkinter import filedialog
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import sqlite3
@@ -1079,7 +1081,7 @@ profile_page_person_info_Privacy = ctk.CTkFrame(profile_page_person_info, fg_col
 
 #Profile reg page
 profile_page_person_info_Profile_header = ctk.CTkFrame(profile_page_person_info_Profile)
-profile_page_person_info_Profile_header_icon = ctk.CTkLabel(profile_page_person_info_Profile_header, text="#")
+#profile_page_person_info_Profile_header_icon = ctk.CTkLabel(profile_page_person_info_Profile_header, text="#")
 profile_page_person_info_Profile_header_label = ctk.CTkLabel(profile_page_person_info_Profile_header, text="Personal Information")
 
 #Profile avatar
@@ -1160,7 +1162,7 @@ profile_page_person_info.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
 
 # Profile grides
 profile_page_person_info_Profile_header.grid(row=0, column=0, padx=5, pady=5)
-profile_page_person_info_Profile_header_icon.grid(row=0, column=0, padx=5, pady=5)
+
 profile_page_person_info_Profile_header_label.grid(row=0, column=1, padx=(15, 0), pady=5)
 profile_page_person_info_Profile_header_btn_edit.grid(row=0, column=3, padx=5, pady=5)
 # Profile inputs grides
@@ -1174,6 +1176,29 @@ profile_page_person_info_Profile_inputs_frame_address_input.grid(row=5, column=0
 profile_page_person_info_Profile_inputs_frame_date_of_birth_text.grid(row=6, column=0, padx=5, pady=(5, 0))
 profile_page_person_info_Profile_inputs_frame_date_of_birth.grid(row=7, column=0, padx=5, pady=(0, 5))
 
+img = ctk.CTkImage(light_image=Image.open("avatar.png"), size=(115, 115))
+profile_page_person_avatar_frame_1_avatar = ctk.CTkLabel(profile_page_person_avatar_frame_1, image=img, text="")
+profile_page_person_avatar_frame_1_avatar.grid(row=0, column=0, padx=5, pady=5)
+
+def change_img():
+    path = filedialog.askopenfilename(initialdir="",
+        filetypes=[("Images", "*.png *.jpg *.jpeg *.webp")]
+    )
+
+    if not path:
+        return
+    
+    new_img = ctk.CTkImage(light_image=Image.open(path), size=(115, 115))
+    profile_page_person_avatar_frame_1_avatar.configure(image=new_img)
+
+    profile_page_person_avatar_frame_1_avatar.image = new_img
+
+change_btn = ctk.CTkButton(profile_page_person_avatar_frame_1, text="Change Image", command=change_img)
+change_btn.grid(row=1, column=0, padx=5, pady=15)
+
+
 show_transfer_page("New Transfer")
 show_page(dashboard_page) 
 root.mainloop()
+
+
