@@ -1120,6 +1120,8 @@ profile_page_person_info_Profile_nickname_frame_name_text = ctk.CTkLabel(profile
 profile_page_person_info_Profile_nickname_frame_lastname_text = ctk.CTkLabel(profile_page_person_info_Profile_nickname_frame, text="Last Name")
 profile_page_person_info_Profile_nickname_frame_name_input = ctk.CTkEntry(profile_page_person_info_Profile_nickname_frame, placeholder_text="name")
 profile_page_person_info_Profile_nickname_frame_lastname_input = ctk.CTkEntry(profile_page_person_info_Profile_nickname_frame, placeholder_text="last name")
+profile_page_person_info_Profile_nickname_frame_password_text = ctk.CTkLabel(profile_page_person_info_Profile_nickname_frame, text="Password")
+profile_page_person_info_Profile_nickname_frame_password_input = ctk.CTkEntry(profile_page_person_info_Profile_nickname_frame, placeholder_text="*****", show="*")
 #inputs other
 profile_page_person_info_Profile_inputs_frame = ctk.CTkFrame(profile_page_person_info_Profile)
 profile_page_person_info_Profile_inputs_frame_email_address_text = ctk.CTkLabel(profile_page_person_info_Profile_inputs_frame, text="Email Address")
@@ -1165,8 +1167,18 @@ profile_page_person_info_Profile_header.grid(row=0, column=0, padx=5, pady=5)
 
 profile_page_person_info_Profile_header_label.grid(row=0, column=1, padx=(15, 0), pady=5)
 profile_page_person_info_Profile_header_btn_edit.grid(row=0, column=3, padx=5, pady=5)
+# Profile personal info nickname grides
+profile_page_person_info_Profile_nickname_frame.grid(row=1, column=0, padx=5, pady=5)
+profile_page_person_info_Profile_nickname_frame_name_text.grid(row=0, column=0, padx=5, pady=(5, 0))
+profile_page_person_info_Profile_nickname_frame_lastname_text.grid(row=0, column=1, padx=5, pady=(5, 0))
+profile_page_person_info_Profile_nickname_frame_name_input.grid(row=1, column=0, padx=5, pady=(0, 5))
+profile_page_person_info_Profile_nickname_frame_lastname_input.grid(row=1, column=1, padx=5, pady=(0, 5))
+profile_page_person_info_Profile_nickname_frame_password_text.grid(row=2, column=0, padx=5, pady=(5, 0))
+profile_page_person_info_Profile_nickname_frame_password_input.grid(row=3, column=0, padx=5, pady=(0, 5))
+
+
 # Profile inputs grides
-profile_page_person_info_Profile_inputs_frame.grid(row=1, column=0, padx=5, pady=5)
+profile_page_person_info_Profile_inputs_frame.grid(row=2, column=0, padx=5, pady=5)
 profile_page_person_info_Profile_inputs_frame_email_address_text.grid(row=0, padx=5, pady=(5, 0))
 profile_page_person_info_Profile_inputs_frame_email_address_input.grid(row=1, padx=5, pady=(0, 5))
 profile_page_person_info_Profile_inputs_frame_phone_number_text.grid(row=2, column=0, padx=5, pady=(5, 0))
@@ -1195,6 +1207,80 @@ def change_img():
 
 change_btn = ctk.CTkButton(profile_page_person_avatar_frame_1, text="Change Image", command=change_img)
 change_btn.grid(row=1, column=0, padx=5, pady=15)
+
+
+
+# Data Base connection
+
+def dataBase():
+    with sqlite3.connect("user.db") as db:
+        cursor = db.cursor()
+        cursor.execute("""
+                       CREATE TABLE IF NOT EXISTS users(
+                       id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                       first_name TEXT,
+                       last_name TEXT,
+
+                       email TEXT,
+                       user_password TEXT,
+                       
+                       phone TEXT,
+                       address TEXT,
+                       birthday TEXT,
+
+                       avatar TEXT
+                       )
+                    """)
+        
+        db.commit()
+
+def register():
+    first_name = profile_page_person_info_Profile_nickname_frame_name_input.get()
+    last_name = profile_page_person_info_Profile_nickname_frame_lastname_input.get()
+
+    email = profile_page_person_info_Profile_inputs_frame_email_address_input.get()
+    phone = profile_page_person_info_Profile_inputs_frame_phone_number_input.get()
+    address = profile_page_person_info_Profile_inputs_frame_address_input.get()
+    birthday = profile_page_person_info_Profile_inputs_frame_date_of_birth.get()
+
+    password = profile_page_person_info_Profile_nickname_frame_password_input.get()
+
+    with sqlite3.connect("user.db") as db:
+        cursor = db.cursor()
+        cursor.execute("""
+                        INSERT INTO users(
+                        first_name,
+                       last_name,
+                       email,
+                       user_password,
+                       phone,
+                       address,
+                       birthday,
+                       avatar
+                       )
+                       VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+                       """,
+                       (
+                           first_name,
+                           last_name,
+                           email,
+                           password,
+                           phone,
+                           address,
+                           birthday,
+                           ""
+                       )
+                       )
+        
+        db.commit()
+
+    print("User registered!")
+        
+
+register_btn = ctk.CTkButton(profile_page_person_info_Profile_inputs_frame, text="Register", command=register)
+register_btn.grid(row=8, column=0, padx=5, pady=(15))
+
 
 
 show_transfer_page("New Transfer")
