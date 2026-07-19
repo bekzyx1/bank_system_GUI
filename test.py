@@ -18,11 +18,11 @@ root.grid_columnconfigure(2, weight=1)
 border = ctk.CTkFrame(root, width=5, fg_color="green")
 border.grid(row=0, column=1, sticky="ns")
 
-sidebar = ctk.CTkFrame(root, width=220, corner_radius=0)
+sidebar = ctk.CTkFrame(root, width=220, corner_radius=0, fg_color="#FFFFFF")
 sidebar.grid(row=0, column=0, sticky="ns")
 
 
-logo = ctk.CTkLabel(sidebar, text="Secure Bank", font=ctk.CTkFont(size=20, weight="bold"))
+logo = ctk.CTkLabel(sidebar, text="Secure Bank", font=ctk.CTkFont(size=20, weight="bold"), text_color="#030213")
 logo.pack(pady=20)
 
 
@@ -30,12 +30,12 @@ logo.pack(pady=20)
 container = ctk.CTkFrame(root)
 container.grid(row=0, column=2, sticky="nsew")
 
-dashboard_page = ctk.CTkFrame(container, fg_color="green")
-account_page = ctk.CTkFrame(container, fg_color="gray")
-transactions_page = ctk.CTkFrame(container, fg_color="transparent")
-transfer_page = ctk.CTkFrame(container, fg_color="green")
-analyze_page = ctk.CTkFrame(container, fg_color="#83855d")
-profile_page = ctk.CTkFrame(container, fg_color="red")
+dashboard_page = ctk.CTkFrame(container, fg_color="#ffffff")
+account_page = ctk.CTkFrame(container, fg_color="#ffffff")
+transactions_page = ctk.CTkFrame(container, fg_color="#ffffff")
+transfer_page = ctk.CTkFrame(container, fg_color="#ffffff")
+analyze_page = ctk.CTkFrame(container, fg_color="#ffffff")
+profile_page = ctk.CTkFrame(container, fg_color="#ffffff")
 
 def show_page(page):
     page.tkraise()
@@ -43,21 +43,43 @@ def show_page(page):
 for page in (dashboard_page, account_page, transactions_page, transfer_page, analyze_page, profile_page):
     page.place(relwidth=1, relheight=1)
 
-btn_dashboard = ctk.CTkButton(sidebar, text="Dashboard", command=lambda: show_page(dashboard_page))
-btn_account = ctk.CTkButton(sidebar, text="Account", command=lambda: show_page(account_page))
-btn_transactions = ctk.CTkButton(sidebar, text="Transactions", command=lambda: show_page(transactions_page))
-btn_transfer= ctk.CTkButton(sidebar, text="Transfer", command=lambda: show_page(transfer_page))
-btn_analyze = ctk.CTkButton(sidebar, text="Analytics", command=lambda: show_page(analyze_page))
-btn_profile = ctk.CTkButton(sidebar, text="Profile", command=lambda: show_page(profile_page))
+active_button = None
+
+def selected(btn):
+    global active_button
+
+    if active_button:
+        active_button.configure(fg_color="transparent", text_color="#030213")
+    
+    btn.configure(fg_color="#030213", text_color="#ffffff")
+    active_button = btn
+
+btn_dashboard = ctk.CTkButton(sidebar, text="Dashboard", command=lambda: (show_page(dashboard_page),selected(btn_dashboard)), fg_color="transparent", text_color="#030213", hover_color="#D9D6D6")
+btn_account = ctk.CTkButton(sidebar, text="Account", command=lambda: (show_page(account_page), selected(btn_account)), fg_color="transparent", text_color="#030213", hover_color="#D9D6D6")
+btn_transactions = ctk.CTkButton(sidebar, text="Transactions", command=lambda: (show_page(transactions_page), selected(btn_transactions)), fg_color="transparent", text_color="#030213", hover_color="#D9D6D6")
+btn_transfer= ctk.CTkButton(sidebar, text="Transfer", command=lambda: (show_page(transfer_page), selected(btn_transfer)), fg_color="transparent", text_color="#030213", hover_color="#D9D6D6")
+btn_analyze = ctk.CTkButton(sidebar, text="Analytics", command=lambda: (show_page(analyze_page), selected(btn_analyze)), fg_color="transparent", text_color="#030213", hover_color="#D9D6D6")
+btn_profile = ctk.CTkButton(sidebar, text="Profile", command=lambda: (show_page(profile_page), selected(btn_profile)), fg_color="transparent", text_color="#030213", hover_color="#D9D6D6")
+
+#selected(btn_dashboard)
+
+# def pressed(event):
+#     btn_dashboard.configure(fg_color="#030213", text_color="#ffffff")
+
+# def released(event):
+#     btn_dashboard.configure(fg_color="#ffffff", text_color="#030213")
+
+# btn_dashboard.bind("<ButtonPress-1>", pressed)
+# btn_dashboard.bind("<ButtonRelease-1>", released)
 
 #for page in (dashboard_)
 
-btn_dashboard.pack(pady=10)
-btn_account.pack(pady=10)
-btn_transactions.pack(pady=10)
-btn_transfer.pack(pady=10)
-btn_analyze.pack(pady=10)
-btn_profile.pack(pady=10)
+btn_dashboard.pack(pady=5)
+btn_account.pack(pady=5)
+btn_transactions.pack(pady=5)
+btn_transfer.pack(pady=5)
+btn_analyze.pack(pady=5)
+btn_profile.pack(pady=5)
 
 
 # --- Dashboard ---
@@ -126,16 +148,16 @@ btn_box.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 # btn_box.grid_columnconfigure(0, weight=1)
 # btn_box.grid_columnconfigure(1, weight=1)
 
-btn_transfer = ctk.CTkButton(btn_box, text="Transfer", height=35)
+btn_transfer = ctk.CTkButton(btn_box, text="Transfer", height=35, fg_color="#030213")
 btn_transfer.pack(side="left", pady=15, padx=15)
 
-btn_pay = ctk.CTkButton(btn_box, text="Pay Bills", height=35)
+btn_pay = ctk.CTkButton(btn_box, text="Pay Bills", height=35, fg_color="#030213")
 btn_pay.pack(side="left", pady=15, padx=15)
 
-btn_deposit = ctk.CTkButton(btn_box, text="Deposit", height=35)
+btn_deposit = ctk.CTkButton(btn_box, text="Deposit", height=35, fg_color="#030213")
 btn_deposit.pack(side="left", pady=15, padx=15)
 
-btn_statements = ctk.CTkButton(btn_box, text="View Statements", height=35)
+btn_statements = ctk.CTkButton(btn_box, text="View Statements", height=35, fg_color="#030213")
 btn_statements.pack(side="left", pady=15, padx=15)
 
 transaction_frame = ctk.CTkFrame(extra)
@@ -181,10 +203,10 @@ account_label.grid(row=0, column=0, padx=10, pady=(15, 0))
 account_label2 = ctk.CTkLabel(account_navbar, text="Manage yout back accounts and view balances.")
 account_label2.grid(row=1, column=0, padx=10, pady=(0, 15))
 
-account_navbar_btn1 = ctk.CTkButton(account_navbar, text="Hide Balance", height=25)
+account_navbar_btn1 = ctk.CTkButton(account_navbar, text="Hide Balance", height=25, fg_color="#030213")
 account_navbar_btn1.grid(row=0, column=1, padx=5, pady=(25, 0))
 
-account_navbar_btn2 = ctk.CTkButton(account_navbar, text="Add Account", height=25)
+account_navbar_btn2 = ctk.CTkButton(account_navbar, text="Add Account", height=25, fg_color="#030213")
 account_navbar_btn2.grid(row=0, column=2, padx=5, pady=(25, 0))
 
 account_navbar_total_balance_1 = ctk.CTkLabel(account_navbar, text="Total Balance Across All Accounts", font=ctk.CTkFont(size=13))
@@ -218,10 +240,10 @@ account_card_1_text5.grid(row=4, column=0, pady=0)
 account_card_1_text6 = ctk.CTkLabel(account_card_1, text="0.01% APY", font=ctk.CTkFont(size=15, weight="bold"))
 account_card_1_text6.grid(row=5, column=0, pady=(0, 15))
 
-account_card_1_btn1 = ctk.CTkButton(account_card_1, text="Transfer", height=25)
+account_card_1_btn1 = ctk.CTkButton(account_card_1, text="Transfer", height=25, fg_color="#030213")
 account_card_1_btn1.grid(row=6, column=0, pady=15, padx=10)
 
-account_card_1_btn2 = ctk.CTkButton(account_card_1, text="View Statements", height=25)
+account_card_1_btn2 = ctk.CTkButton(account_card_1, text="View Statements", height=25, fg_color="#030213")
 account_card_1_btn2.grid(row=6, column=1, pady=15, padx=10)
 
 
@@ -250,10 +272,10 @@ account_card_2_text5.grid(row=4, column=0, pady=0)
 account_card_2_text6 = ctk.CTkLabel(account_card_2, text="0.50% APY", font=ctk.CTkFont(size=10, weight="bold"))
 account_card_2_text6.grid(row=5, column=0, pady=(0, 15))
 
-account_card_2_btn1 = ctk.CTkButton(account_card_2, text="Transfer", height=25)
+account_card_2_btn1 = ctk.CTkButton(account_card_2, text="Transfer", height=25, fg_color="#030213")
 account_card_2_btn1.grid(row=6, column=0, pady=15, padx=10)
 
-account_card_2_btn2 = ctk.CTkButton(account_card_2, text="View Statements", height=25)
+account_card_2_btn2 = ctk.CTkButton(account_card_2, text="View Statements", height=25, fg_color="#030213")
 account_card_2_btn2.grid(row=6, column=1, pady=15, padx=10)
 
 # Business Account Card
@@ -278,10 +300,10 @@ account_card_3_text5.grid(row=4, column=0, pady=0)
 account_card_3_text6 = ctk.CTkLabel(account_card_3, text="0.15% APY", font=ctk.CTkFont(size=13))
 account_card_3_text6.grid(row=5, column=0, pady=(0, 15))
 
-account_card_3_btn1 = ctk.CTkButton(account_card_3, text="Transfer", height=25)
+account_card_3_btn1 = ctk.CTkButton(account_card_3, text="Transfer", height=25, fg_color="#030213")
 account_card_3_btn1.grid(row=6, column=0, padx=10, pady=15)
 
-account_card_3_btn2 = ctk.CTkButton(account_card_3, text="View Details", height=25)
+account_card_3_btn2 = ctk.CTkButton(account_card_3, text="View Details", height=25, fg_color="#030213")
 account_card_3_btn2.grid(row=6, column=1, padx=10, pady=15)
 
 #--- Emergency Fund ---
@@ -309,10 +331,10 @@ account_card_4_text5.grid(row=5, column=0, pady=0)
 account_card_4_text6 = ctk.CTkLabel(account_card_4, text="3.9% APY", font=ctk.CTkFont(size=13))
 account_card_4_text6.grid(row=6, column=0, pady=(0, 15))
 
-account_card_4_btn1 = ctk.CTkButton(account_card_4, text="Transfer", height=25)
+account_card_4_btn1 = ctk.CTkButton(account_card_4, text="Transfer", height=25, fg_color="#030213")
 account_card_4_btn1.grid(row=7, column=0, padx=10, pady=15)
 
-account_card_4_btn2 = ctk.CTkButton(account_card_4, text="View Details", height=25)
+account_card_4_btn2 = ctk.CTkButton(account_card_4, text="View Details", height=25, fg_color="#030213")
 account_card_4_btn2.grid(row=7, column=1, padx=10, pady=15)
 
 #--- Account Footer ---
@@ -327,28 +349,29 @@ account_foot.grid_columnconfigure(3, weight=1)
 account_foot_label = ctk.CTkLabel(account_foot, text="Account Services", font=ctk.CTkFont(size=15, weight="bold"))
 account_foot_label.grid(row=0, column=0, pady=15)
 
-account_foot_btn1 = ctk.CTkButton(account_foot, text="Open New Account", height=35, width=15 )
+account_foot_btn1 = ctk.CTkButton(account_foot, text="Open New Account", height=35, width=15, fg_color="#030213")
 account_foot_btn1.grid(row=1, column=0, padx=5, pady=(5, 15))
 
-account_foot_btn2 = ctk.CTkButton(account_foot, text="Other Checks", height=35, width=15)
+account_foot_btn2 = ctk.CTkButton(account_foot, text="Other Checks", height=35, width=15,fg_color="#030213")
 account_foot_btn2.grid(row=1, column=1, padx=5, pady=(5, 15))
 
-account_foot_btn3 = ctk.CTkButton(account_foot, text="Account Statements", height=35, width=15)
+account_foot_btn3 = ctk.CTkButton(account_foot, text="Account Statements", height=35, width=15, fg_color="#030213")
 account_foot_btn3.grid(row=1, column=2, padx=5, pady=(5, 15))
 
-account_foot_btn4 = ctk.CTkButton(account_foot, text="Account Settings", height=35, width=15)
+account_foot_btn4 = ctk.CTkButton(account_foot, text="Account Settings", height=35, width=15, fg_color="#030213")
 account_foot_btn4.grid(row=1, column=3, padx=5, pady=(5, 15))
 
 
 
 #--- Transactions ---
-transactions_label = ctk.CTkLabel(transactions_page, text="Transactions Page", font=ctk.CTkFont(size=20, weight="bold"))
+transactions_label = ctk.CTkLabel(transactions_page, text="Transactions Page", font=ctk.CTkFont(size=20, weight="bold"), text_color="#030213")
 transactions_label.pack(pady=35)
 
 title_transaction = ctk.CTkLabel(
     transactions_page,
     text="Recent Transaction (12)",
-    font=ctk.CTkFont(size=15, weight="bold")
+    font=ctk.CTkFont(size=15, weight="bold"),
+    text_color="#030213"
 )
 
 table = ctk.CTkFrame(
@@ -378,7 +401,8 @@ for col, text in enumerate(table_headers):
     label = ctk.CTkLabel(
         table,
         text=text,
-        font=ctk.CTkFont(weight="bold")
+        font=ctk.CTkFont(weight="bold"),
+        text_color="#030213"
     )
 
     label.grid(
@@ -411,7 +435,8 @@ for row_num, transaction in enumerate(transactions, start=1):
 
     ctk.CTkLabel(
         table,
-        text=transaction[0]
+        text=transaction[0],
+        text_color="#030213"
     ).grid(
         row=row_num,
         column=0,
@@ -424,7 +449,8 @@ for row_num, transaction in enumerate(transactions, start=1):
 
     ctk.CTkLabel(
         table,
-        text=transaction[1]
+        text=transaction[1],
+        text_color="#030213"
     ).grid(
         row=row_num,
         column=1,
@@ -451,7 +477,8 @@ for row_num, transaction in enumerate(transactions, start=1):
 
     ctk.CTkLabel(
         category_frame,
-        text=transaction[2]
+        text=transaction[2],
+        text_color="#ffffff"
     ).pack(
         padx=10,
         pady=3
@@ -461,7 +488,8 @@ for row_num, transaction in enumerate(transactions, start=1):
 
     ctk.CTkLabel(
         table,
-        text=transaction[3]
+        text=transaction[3],
+        text_color="#030213"
     ).grid(
         row=row_num,
         column=3,
@@ -560,16 +588,16 @@ transfer_leaf_amounts.grid(row=1, column=1, padx=15, pady=15, sticky="nsew")
 transfer_leaf_amounts_label = ctk.CTkLabel(transfer_leaf_amounts, text="Quick Amounts", font=ctk.CTkFont(size=15, weight="bold"))
 transfer_leaf_amounts_label.grid(row=0, column=0, padx=15, pady=15)
 
-transfer_leaf_amounts_btn1 = ctk.CTkButton(transfer_leaf_amounts, text="$25")
+transfer_leaf_amounts_btn1 = ctk.CTkButton(transfer_leaf_amounts, text="$25", fg_color="#030213")
 transfer_leaf_amounts_btn1.grid(row=1, column=0, padx=15, pady=15)
 
-transfer_leaf_amounts_btn2 = ctk.CTkButton(transfer_leaf_amounts, text="$50")
+transfer_leaf_amounts_btn2 = ctk.CTkButton(transfer_leaf_amounts, text="$50", fg_color="#030213")
 transfer_leaf_amounts_btn2.grid(row=1, column=1, padx=15, pady=15)
 
-transfer_leaf_amounts_btn3 = ctk.CTkButton(transfer_leaf_amounts, text="$100")
+transfer_leaf_amounts_btn3 = ctk.CTkButton(transfer_leaf_amounts, text="$100", fg_color="#030213")
 transfer_leaf_amounts_btn3.grid(row=2, column=0, padx=15, pady=15)
 
-transfer_leaf_amounts_btn4 = ctk.CTkButton(transfer_leaf_amounts, text="$500")
+transfer_leaf_amounts_btn4 = ctk.CTkButton(transfer_leaf_amounts, text="$500", fg_color="#030213")
 transfer_leaf_amounts_btn4.grid(row=2, column=1, padx=15, pady=15)
 
 # --- page 1 --- New Transfer
@@ -590,7 +618,8 @@ button_frame.grid(row=1, column=0)
 transfer_leaf_1_header_btn1 = ctk.CTkButton(
     button_frame,
     text="Between My Accounts",
-    height=55
+    height=55,
+    fg_color="#030213"
 )
 
 transfer_leaf_1_header_btn1.grid(row=1, column=0, padx=5, pady=10, )
@@ -599,7 +628,8 @@ transfer_leaf_1_header_btn2 = ctk.CTkButton(
     button_frame,
     text="To Someone Else",
     width=130,
-    height=55
+    height=55,
+    fg_color="#030213"
 )
 
 transfer_leaf_1_header_btn2.grid(row=1, column=1, padx=5, pady=10)
@@ -622,7 +652,8 @@ for page in (transfer_leaf_1, transfer_leaf_2):
 transfer_header_segment = ctk.CTkSegmentedButton(
     transfer_header,
     values=["New Transfer", "Scheduled Transfers"],
-    command=show_transfer_page
+    command=show_transfer_page,
+    fg_color="#030213"
 ).grid(
     row=2,
     column=0,
@@ -682,7 +713,7 @@ transfer_leaf_2_container_header.grid_columnconfigure(1, weight=1)
 transfer_leaf_2_header_label = ctk.CTkLabel(transfer_leaf_2_container_header, text="Scheduld Transfer", font=ctk.CTkFont(size=15, weight="bold"))
 transfer_leaf_2_header_label.grid(row=0, column=0, padx=5, pady=(0, 0), sticky="w")
 
-transfer_leaf_2_header_container_btn = ctk.CTkButton(transfer_leaf_2_container_header, text="Add Scheduld Transfer", font=ctk.CTkFont(size=15), height=35)
+transfer_leaf_2_header_container_btn = ctk.CTkButton(transfer_leaf_2_container_header, text="Add Scheduld Transfer", font=ctk.CTkFont(size=15), height=35, fg_color="#030213")
 transfer_leaf_2_header_container_btn.grid(row=0, column=1, padx=5, pady=5, sticky="e")
 
 #      Scheduled Transfers, frame 1 ---
@@ -711,10 +742,10 @@ transfer_leaf_2_btn_box_1.grid(row=0, column=1, padx=5, pady=5, sticky="e")
 transfer_leaf_2_btn_box_1_label = ctk.CTkLabel(transfer_leaf_2_btn_box_1, text="$500")
 transfer_leaf_2_btn_box_1_label.grid(row=0, column=1, padx=5, pady=5)
 
-transfer_leaf_2_btn_box_1_btn1 = ctk.CTkButton(transfer_leaf_2_btn_box_1, text="Edit")
+transfer_leaf_2_btn_box_1_btn1 = ctk.CTkButton(transfer_leaf_2_btn_box_1, text="Edit", fg_color="#030213")
 transfer_leaf_2_btn_box_1_btn1.grid(row=1, column=0, padx=5, pady=5)
 
-transfer_leaf_2_btn_box_1_btn2 = ctk.CTkButton(transfer_leaf_2_btn_box_1, text="Cancel")
+transfer_leaf_2_btn_box_1_btn2 = ctk.CTkButton(transfer_leaf_2_btn_box_1, text="Cancel", fg_color="#030213")
 transfer_leaf_2_btn_box_1_btn2.grid(row=1, column=1, padx=5, pady=5)
 
 #     Scheduled Transfers, frame 2 ---
@@ -740,10 +771,10 @@ transfer_leaf_2_btn_box_2.grid(row=0, column=1, padx=5, pady=5, sticky="e")
 transfer_leaf_2_btn_box_2_label = ctk.CTkLabel(transfer_leaf_2_btn_box_2, text="$200")
 transfer_leaf_2_btn_box_2_label.grid(row=0, column=1, padx=5, pady=(5, 0))
 
-transfer_leaf_2_btn_box_2_btn1 = ctk.CTkButton(transfer_leaf_2_btn_box_2, text="Edit")
+transfer_leaf_2_btn_box_2_btn1 = ctk.CTkButton(transfer_leaf_2_btn_box_2, text="Edit", fg_color="#030213")
 transfer_leaf_2_btn_box_2_btn1.grid(row=1, column=0, padx=5, pady=(0, 5))
 
-transfer_leaf_2_btn_box_2_btn2 = ctk.CTkButton(transfer_leaf_2_btn_box_2, text="Cancel")
+transfer_leaf_2_btn_box_2_btn2 = ctk.CTkButton(transfer_leaf_2_btn_box_2, text="Cancel", fg_color="#030213")
 transfer_leaf_2_btn_box_2_btn2.grid(row=1, column=1, padx=5, pady=(0, 5))
 
 
@@ -1062,225 +1093,170 @@ canvas2.get_tk_widget().pack(
     pady=(0, 10)
 )
 
+# Resgiter_Section_Profile
 
+# ---------------- DATABASE ----------------
 
-# Father grid configurations
-profile_page.grid_columnconfigure(0, weight=1)
-profile_page.grid_rowconfigure(1, weight=1)
+db = sqlite3.connect("users.db")
+cursor = db.cursor()
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS users(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE,
+    email TEXT,
+    password TEXT
+)
+""")
 
-# Profile page
-profile_page_header = ctk.CTkFrame(profile_page)
-profile_page_header_text_1 = ctk.CTkLabel(profile_page_header, text="Profile Settings", font=("Italic", 19, "bold"))
-profile_page_header_text_2 = ctk.CTkLabel(profile_page_header, text="Manage your account settings and preferences", font=ctk.CTkFont(size=11, weight="bold"))
-profile_page_person_info = ctk.CTkFrame(profile_page)
-profile_page_person_info_Profile = ctk.CTkFrame(profile_page_person_info, fg_color="white")
-profile_page_person_info_Security = ctk.CTkFrame(profile_page_person_info, fg_color="#fcba03")
-profile_page_person_info_Notifications = ctk.CTkFrame(profile_page_person_info, fg_color="green")
-profile_page_person_info_Privacy = ctk.CTkFrame(profile_page_person_info, fg_color="gray")
+db.commit()
 
-#Profile reg page
-profile_page_person_info_Profile_header = ctk.CTkFrame(profile_page_person_info_Profile)
-#profile_page_person_info_Profile_header_icon = ctk.CTkLabel(profile_page_person_info_Profile_header, text="#")
-profile_page_person_info_Profile_header_label = ctk.CTkLabel(profile_page_person_info_Profile_header, text="Personal Information")
+# ---------------- FUNCTIONS ----------------
 
-#Profile avatar
-profile_page_person_avatar_frame_1 = ctk.CTkFrame(profile_page_person_info_Profile)
-profile_page_person_avatar_frame_1.grid(row=1, column=1, padx=5, pady=5)
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
-save_btn = False
-
-def clickBtn():
-    global save_btn
-
-    save_btn = not save_btn
-
-    if save_btn:
-        profile_page_person_info_Profile_header_btn_edit.grid_forget()
-        profile_page_person_info_Profile_header_btn_save.grid(
-            row=0,
-            column=3,
-            padx=5,
-            pady=5
-        )
-    else:
-        profile_page_person_info_Profile_header_btn_save.grid_forget()
-        profile_page_person_info_Profile_header_btn_edit.grid(
-            row=0,
-            column=3,
-            padx=5,
-            pady=5
-        )
-
-profile_page_person_info_Profile_header_btn_edit = ctk.CTkButton(profile_page_person_info_Profile_header, text="Edit Profile", command=clickBtn)
-profile_page_person_info_Profile_header_btn_save = ctk.CTkButton(profile_page_person_info_Profile_header, text="Save Change", command=clickBtn)
-#Inputs nickname
-profile_page_person_info_Profile_nickname_frame = ctk.CTkFrame(profile_page_person_info_Profile)
-profile_page_person_info_Profile_nickname_frame_name_text = ctk.CTkLabel(profile_page_person_info_Profile_nickname_frame, text="First Name")
-profile_page_person_info_Profile_nickname_frame_lastname_text = ctk.CTkLabel(profile_page_person_info_Profile_nickname_frame, text="Last Name")
-profile_page_person_info_Profile_nickname_frame_name_input = ctk.CTkEntry(profile_page_person_info_Profile_nickname_frame, placeholder_text="name")
-profile_page_person_info_Profile_nickname_frame_lastname_input = ctk.CTkEntry(profile_page_person_info_Profile_nickname_frame, placeholder_text="last name")
-profile_page_person_info_Profile_nickname_frame_password_text = ctk.CTkLabel(profile_page_person_info_Profile_nickname_frame, text="Password")
-profile_page_person_info_Profile_nickname_frame_password_input = ctk.CTkEntry(profile_page_person_info_Profile_nickname_frame, placeholder_text="*****", show="*")
-#inputs other
-profile_page_person_info_Profile_inputs_frame = ctk.CTkFrame(profile_page_person_info_Profile)
-profile_page_person_info_Profile_inputs_frame_email_address_text = ctk.CTkLabel(profile_page_person_info_Profile_inputs_frame, text="Email Address")
-profile_page_person_info_Profile_inputs_frame_email_address_input = ctk.CTkEntry(profile_page_person_info_Profile_inputs_frame, placeholder_text="paloncha@gmail.com")
-profile_page_person_info_Profile_inputs_frame_phone_number_text = ctk.CTkLabel(profile_page_person_info_Profile_inputs_frame, text="Phone Number")
-profile_page_person_info_Profile_inputs_frame_phone_number_input = ctk.CTkEntry(profile_page_person_info_Profile_inputs_frame, placeholder_text="+998 00-111-11-11")
-profile_page_person_info_Profile_inputs_frame_address_text = ctk.CTkLabel(profile_page_person_info_Profile_inputs_frame, text="Address")
-profile_page_person_info_Profile_inputs_frame_address_input = ctk.CTkEntry(profile_page_person_info_Profile_inputs_frame, placeholder_text="123 Ipak Yuli, City, State 12345")
-profile_page_person_info_Profile_inputs_frame_date_of_birth_text = ctk.CTkLabel(profile_page_person_info_Profile_inputs_frame, text="Date of Birth")
-profile_page_person_info_Profile_inputs_frame_date_of_birth = ctk.CTkEntry(profile_page_person_info_Profile_inputs_frame, placeholder_text="01 / 01 / 1990")
-
-
-
-
-def show_profile_menu(page):
-    if page == "Profile":
-        profile_page_person_info_Profile.tkraise()
-    elif page == "Security":
-        profile_page_person_info_Security.tkraise()
-    elif page == "Notifications":
-        profile_page_person_info_Notifications.tkraise()
-    elif page == "Privacy":
-        profile_page_person_info_Privacy.tkraise()
-    else:
-        profile_page_person_info_Profile.tkraise()
-
-for page in (profile_page_person_info_Profile, profile_page_person_info_Security, profile_page_person_info_Notifications, profile_page_person_info_Privacy):
-    page.place(relx=0, rely=0, relwidth=1, relheight=1)
-        
-profile_page_header_option = ctk.CTkSegmentedButton(profile_page_header, values=["Profile", "Security", "Notifications", "Privacy"], command=show_profile_menu)
-
-# childrens grid configurations
-
-#Grids
-profile_page_header.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
-profile_page_header_text_1.grid(row=0, column=0, padx=5, pady=(5, 0))
-profile_page_header_text_2.grid(row=1, column=0, padx=5, pady=(0, 15))
-profile_page_header_option.grid(row=2, column=0, padx=5, pady=5)
-profile_page_person_info.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
-
-# Profile grides
-profile_page_person_info_Profile_header.grid(row=0, column=0, padx=5, pady=5)
-
-profile_page_person_info_Profile_header_label.grid(row=0, column=1, padx=(15, 0), pady=5)
-profile_page_person_info_Profile_header_btn_edit.grid(row=0, column=3, padx=5, pady=5)
-# Profile personal info nickname grides
-profile_page_person_info_Profile_nickname_frame.grid(row=1, column=0, padx=5, pady=5)
-profile_page_person_info_Profile_nickname_frame_name_text.grid(row=0, column=0, padx=5, pady=(5, 0))
-profile_page_person_info_Profile_nickname_frame_lastname_text.grid(row=0, column=1, padx=5, pady=(5, 0))
-profile_page_person_info_Profile_nickname_frame_name_input.grid(row=1, column=0, padx=5, pady=(0, 5))
-profile_page_person_info_Profile_nickname_frame_lastname_input.grid(row=1, column=1, padx=5, pady=(0, 5))
-profile_page_person_info_Profile_nickname_frame_password_text.grid(row=2, column=0, padx=5, pady=(5, 0))
-profile_page_person_info_Profile_nickname_frame_password_input.grid(row=3, column=0, padx=5, pady=(0, 5))
-
-
-# Profile inputs grides
-profile_page_person_info_Profile_inputs_frame.grid(row=2, column=0, padx=5, pady=5)
-profile_page_person_info_Profile_inputs_frame_email_address_text.grid(row=0, padx=5, pady=(5, 0))
-profile_page_person_info_Profile_inputs_frame_email_address_input.grid(row=1, padx=5, pady=(0, 5))
-profile_page_person_info_Profile_inputs_frame_phone_number_text.grid(row=2, column=0, padx=5, pady=(5, 0))
-profile_page_person_info_Profile_inputs_frame_phone_number_input.grid(row=3, column=0, padx=5, pady=(0, 5))
-profile_page_person_info_Profile_inputs_frame_address_text.grid(row=4, column=0, padx=5, pady=(5, 0))
-profile_page_person_info_Profile_inputs_frame_address_input.grid(row=5, column=0, padx=5, pady=(0, 5))
-profile_page_person_info_Profile_inputs_frame_date_of_birth_text.grid(row=6, column=0, padx=5, pady=(5, 0))
-profile_page_person_info_Profile_inputs_frame_date_of_birth.grid(row=7, column=0, padx=5, pady=(0, 5))
-
-img = ctk.CTkImage(light_image=Image.open("avatar.png"), size=(115, 115))
-profile_page_person_avatar_frame_1_avatar = ctk.CTkLabel(profile_page_person_avatar_frame_1, image=img, text="")
-profile_page_person_avatar_frame_1_avatar.grid(row=0, column=0, padx=5, pady=5)
-
-def change_img():
-    path = filedialog.askopenfilename(initialdir="",
-        filetypes=[("Images", "*.png *.jpg *.jpeg *.webp")]
-    )
-
-    if not path:
-        return
-    
-    new_img = ctk.CTkImage(light_image=Image.open(path), size=(115, 115))
-    profile_page_person_avatar_frame_1_avatar.configure(image=new_img)
-
-    profile_page_person_avatar_frame_1_avatar.image = new_img
-
-change_btn = ctk.CTkButton(profile_page_person_avatar_frame_1, text="Change Image", command=change_img)
-change_btn.grid(row=1, column=0, padx=5, pady=15)
-
-
-
-# Data Base connection
-
-def dataBase():
-    with sqlite3.connect("user.db") as db:
-        cursor = db.cursor()
-        cursor.execute("""
-                       CREATE TABLE IF NOT EXISTS users(
-                       id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-                       first_name TEXT,
-                       last_name TEXT,
-
-                       email TEXT,
-                       user_password TEXT,
-                       
-                       phone TEXT,
-                       address TEXT,
-                       birthday TEXT,
-
-                       avatar TEXT
-                       )
-                    """)
-        
-        db.commit()
 
 def register():
-    first_name = profile_page_person_info_Profile_nickname_frame_name_input.get()
-    last_name = profile_page_person_info_Profile_nickname_frame_lastname_input.get()
 
-    email = profile_page_person_info_Profile_inputs_frame_email_address_input.get()
-    phone = profile_page_person_info_Profile_inputs_frame_phone_number_input.get()
-    address = profile_page_person_info_Profile_inputs_frame_address_input.get()
-    birthday = profile_page_person_info_Profile_inputs_frame_date_of_birth.get()
+    username = username_entry.get().strip()
+    email = email_entry.get().strip()
+    password = password_entry.get()
+    confirm = confirm_entry.get()
 
-    password = profile_page_person_info_Profile_nickname_frame_password_input.get()
+    if username == "" or email == "" or password == "":
+        messagebox.showerror("Error", "Fill all fields.")
+        return
 
-    with sqlite3.connect("user.db") as db:
-        cursor = db.cursor()
-        cursor.execute("""
-                        INSERT INTO users(
-                        first_name,
-                       last_name,
-                       email,
-                       user_password,
-                       phone,
-                       address,
-                       birthday,
-                       avatar
-                       )
-                       VALUES(?, ?, ?, ?, ?, ?, ?, ?)
-                       """,
-                       (
-                           first_name,
-                           last_name,
-                           email,
-                           password,
-                           phone,
-                           address,
-                           birthday,
-                           ""
-                       )
-                       )
-        
-        db.commit()
+    if password != confirm:
+        messagebox.showerror("Error", "Passwords don't match.")
+        return
 
-    print("User registered!")
-        
+    cursor.execute(
+        "SELECT * FROM users WHERE username=?",
+        (username,)
+    )
 
-register_btn = ctk.CTkButton(profile_page_person_info_Profile_inputs_frame, text="Register", command=register)
-register_btn.grid(row=8, column=0, padx=5, pady=(15))
+    if cursor.fetchone():
+        messagebox.showerror("Error", "Username already exists.")
+        return
 
+    cursor.execute(
+        "INSERT INTO users(username,email,password) VALUES(?,?,?)",
+        (
+            username,
+            email,
+            hash_password(password)
+        )
+    )
+
+    db.commit()
+
+    messagebox.showinfo(
+        "Success",
+        "Registration completed!"
+    )
+
+    username_entry.delete(0, "end")
+    email_entry.delete(0, "end")
+    password_entry.delete(0, "end")
+    confirm_entry.delete(0, "end")
+
+
+#Register_Section : Grids_onption
+frame = ctk.CTkFrame(
+    profile_page,
+    width=380,
+    height=520,
+    corner_radius=20
+)
+
+frame.grid(row=0, column=0)
+frame.grid_propagate(False)
+
+# Настройка колонок
+frame.grid_columnconfigure(0, weight=1)
+
+# ---------- TITLE ----------
+
+title = ctk.CTkLabel(
+    frame,
+    text="Create Account",
+    font=("Arial", 28, "bold")
+)
+
+title.grid(row=0, column=0, pady=(30, 5))
+
+subtitle = ctk.CTkLabel(
+    frame,
+    text="Register to continue",
+    text_color="gray"
+)
+
+subtitle.grid(row=1, column=0, pady=(0, 25))
+
+# ---------- ENTRIES ----------
+
+username_entry = ctk.CTkEntry(
+    frame,
+    width=300,
+    height=45,
+    placeholder_text="Username"
+)
+
+username_entry.grid(row=2, column=0, pady=10)
+
+email_entry = ctk.CTkEntry(
+    frame,
+    width=300,
+    height=45,
+    placeholder_text="Email"
+)
+
+email_entry.grid(row=3, column=0, pady=10)
+
+password_entry = ctk.CTkEntry(
+    frame,
+    width=300,
+    height=45,
+    placeholder_text="Password",
+    show="*"
+)
+
+password_entry.grid(row=4, column=0, pady=10)
+
+confirm_entry = ctk.CTkEntry(
+    frame,
+    width=300,
+    height=45,
+    placeholder_text="Confirm Password",
+    show="*"
+)
+
+confirm_entry.grid(row=5, column=0, pady=10)
+
+# ---------- BUTTON ----------
+
+register_btn = ctk.CTkButton(
+    frame,
+    text="Register",
+    width=300,
+    height=45,
+    corner_radius=10,
+    command=register
+)
+
+register_btn.grid(row=6, column=0, pady=(25, 15))
+
+# ---------- FOOTER ----------
+
+footer = ctk.CTkLabel(
+    frame,
+    text="Already have an account?\nLogin",
+    text_color="gray"
+)
+
+footer.grid(row=7, column=0)
 
 
 show_transfer_page("New Transfer")
