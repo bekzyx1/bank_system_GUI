@@ -12,9 +12,6 @@ root = ctk.CTk()
 root.geometry("500x400")
 root.title("Login System")
 
-root.grid_rowconfigure(0, weight=1)
-root.grid_columnconfigure(2, weight=1)
-
 border = ctk.CTkFrame(root, width=5, fg_color="green")
 border.grid(row=0, column=1, sticky="ns")
 
@@ -25,7 +22,8 @@ sidebar.grid(row=0, column=0, sticky="ns")
 logo = ctk.CTkLabel(sidebar, text="Secure Bank", font=ctk.CTkFont(size=20, weight="bold"), text_color="#030213")
 logo.pack(pady=20)
 
-
+root.grid_rowconfigure(0, weight=1)
+root.grid_columnconfigure(2, weight=1)
 
 container = ctk.CTkFrame(root)
 container.grid(row=0, column=2, sticky="nsew")
@@ -120,7 +118,7 @@ card2_label.pack(pady=15)
 
 card2_value = ctk.CTkLabel(card2, text="+$ 5,000.00", font=("Arial", 31, "bold"))
 card2_value.pack(pady=(0, 35))
-                           
+                        
 #--- card 3 ---
 card3 = ctk.CTkFrame(cards)
 card3.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
@@ -416,16 +414,16 @@ for col, text in enumerate(table_headers):
 #--- Data ---
 transactions = [
     ("1/8/2025", "Coffee Shop", "Food & Dining",
-     "Primary Checking", "Completed", "$5.35"),
+    "Primary Checking", "Completed", "$5.35"),
 
     ("1/8/2025", "Gas Station", "Transportation",
-     "Primary Checking", "Completed", "$45.20"),
+    "Primary Checking", "Completed", "$45.20"),
 
     ("1/8/2025", "Transfer from Checking", "Transfer",
-     "Primary Cheking", "Completed", "$85.23"),
+    "Primary Cheking", "Completed", "$85.23"),
 
-     ("1/5/2025", "Salary Deposit", "Income",
-     "Primary Chechking", "Completed", "+3500.00"),
+    ("1/5/2025", "Salary Deposit", "Income",
+    "Primary Chechking", "Completed", "+3500.00"),
 ]
 
 for row_num, transaction in enumerate(transactions, start=1):
@@ -1088,16 +1086,22 @@ canvas2 = FigureCanvasTkAgg(
 canvas2.draw()
 canvas2.get_tk_widget().pack(
     fill="both",
-    expand=True,
+    expand=True,                                                                                                                                                                                                                                                                                                                                                          
     padx=10,
     pady=(0, 10)
 )
+
+show_transfer_page("New Transfer")
+show_page(dashboard_page) 
 
 # Resgiter_Section_Profile
 
 # ---------------- DATABASE ----------------
 
-db = sqlite3.connect("users.db")
+profile_page.grid_rowconfigure(0, weight=1)
+profile_page.grid_columnconfigure(0, weight=1)
+
+db = sqlite3.connect("userbek.db")
 cursor = db.cursor()
 
 cursor.execute("""
@@ -1118,7 +1122,6 @@ def hash_password(password):
 
 
 def register():
-
     username = username_entry.get().strip()
     email = email_entry.get().strip()
     password = password_entry.get()
@@ -1164,6 +1167,7 @@ def register():
 
 
 #Register_Section : Grids_onption
+
 frame = ctk.CTkFrame(
     profile_page,
     width=380,
@@ -1171,12 +1175,9 @@ frame = ctk.CTkFrame(
     corner_radius=20
 )
 
-frame.grid(row=0, column=0)
-frame.grid_propagate(False)
-
-# Настройка колонок
 frame.grid_columnconfigure(0, weight=1)
-
+frame.grid_propagate(False)
+frame.grid(row=0, column=0)
 # ---------- TITLE ----------
 
 title = ctk.CTkLabel(
@@ -1242,6 +1243,8 @@ register_btn = ctk.CTkButton(
     text="Register",
     width=300,
     height=45,
+    fg_color="#030213",
+    hover_color="#D9D6D6",
     corner_radius=10,
     command=register
 )
@@ -1259,8 +1262,7 @@ footer = ctk.CTkLabel(
 footer.grid(row=7, column=0)
 
 
-show_transfer_page("New Transfer")
-show_page(dashboard_page) 
+
 root.mainloop()
 
 
